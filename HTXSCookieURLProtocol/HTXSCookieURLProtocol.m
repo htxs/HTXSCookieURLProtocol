@@ -33,7 +33,6 @@ static NSString *HTXSCookieHeader = @"X-HTXSCookie";
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
         _sharedConfiguration = [[HTXSCookieConfiguration alloc] init];
-        //-- TODO:tianjie 初始获取一次本地已保存的Cookies
     });
     
     return _sharedConfiguration;
@@ -154,6 +153,10 @@ static NSString *HTXSCookieHeader = @"X-HTXSCookie";
 
 - (NSString *)cookieHeaderForHostName:(NSString *)hostName {
     
+    if (!hostName || hostName.length == 0) {
+        return nil;
+    }
+    
     NSString *cookieHeader = nil;
     NSArray *cookies = [self cookies];
     
@@ -187,7 +190,7 @@ static NSString *HTXSCookieHeader = @"X-HTXSCookie";
 - (void)setCookies:(NSArray *)cookies {
     
     dispatch_barrier_sync(self.concurrentQueue, ^{
-        if (!cookies || ![cookies isKindOfClass:[NSArray class]] || cookies.count) {
+        if (!cookies || ![cookies isKindOfClass:[NSArray class]] || cookies.count == 0) {
             [self.mutableCookies removeAllObjects];
         }
         else {
