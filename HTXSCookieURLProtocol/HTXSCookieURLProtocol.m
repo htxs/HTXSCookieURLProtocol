@@ -102,7 +102,7 @@ static NSString *HTXSCookieHeader = @"X-HTXSCookie";
 - (NSURLRequest *)connection:(NSURLConnection *)connection willSendRequest:(NSURLRequest *)request redirectResponse:(NSURLResponse *)response {
     
     if (response != nil) {
-        NSMutableURLRequest *redirectableRequest = [[self request] mutableCopy];
+        NSMutableURLRequest *redirectableRequest = [request mutableCopy];
         [redirectableRequest setValue:nil forHTTPHeaderField:HTXSCookieHeader];
         [[self client] URLProtocol:self wasRedirectedToRequest:redirectableRequest redirectResponse:response];
         return redirectableRequest;
