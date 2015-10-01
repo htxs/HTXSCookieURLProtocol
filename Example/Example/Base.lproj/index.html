@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<!-- @author 田杰 -->
+<html>
+    
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+            <meta name="viewport" content="initial-scale=1.0,maximum-scale=1.0,user-scalable=0">
+                <title>htxs.me 客户端共享登录态测试</title>
+    </head>
+    
+    <body>
+        <div id="msg">
+            <a href="htxs://userLogin">未登录--点击去到App登录</a>
+        </div>
+        <script type="text/javascript">
+            function appCallback(_csid) {
+                //参数携带了当前域下的所有Cookies，已按照Cookies格式拼接好了
+                if (_csid == null || _csid == "") {
+                    var allCookiesStr = document.cookie;
+                    var allCookies = allCookiesStr.split("; ");
+                    for (var i = 0; i < allCookies.length; i++) {
+                        var cookie = allCookies[i].split("=");
+                        if (cookie.length > 1) {
+                            var exp = new Date();
+                            exp.setTime(exp.getTime() - 10);
+                            document.cookie = cookie[0] + "=" + cookie[1] + ";expires=" + exp.toGMTString();
+                        }
+                    }
+                } else {
+                    document.cookie = _csid;
+                }
+                window.location.reload(true);
+            }
+        
+        function getCookie(name) {
+            var arr = document.cookie.match(new RegExp("(^| )" + name + "=([^;]*)(;|$)"));
+            if (arr != null)
+            return unescape(arr[2]);
+            return null;
+        };
+        
+        var csid = getCookie("HTXS_TOKEN");
+        if (csid == null || csid == "") {
+            document.getElementById("msg").innerHTML = '<a href="htxs://userLogin">未登录--点击去到App登录</a>';
+        } else {
+            document.getElementById("msg").innerHTML = '<a href="htxs://userLogout">您已在App端登录--点击退出登录</a>';
+        }
+        </script>
+        
+    </body>
+    
+</html>
