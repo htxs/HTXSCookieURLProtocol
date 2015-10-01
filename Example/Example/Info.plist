@@ -36,5 +36,18 @@
 		<string>UIInterfaceOrientationLandscapeLeft</string>
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
+    <key>NSAppTransportSecurity</key>
+    <dict>
+        <key>NSAllowsArbitraryLoads</key>
+        <true/>
+    </dict>
+    <key>LSApplicationQueriesSchemes</key>
+    <array>
+        <!-- 客户端 URL Scheme 白名单-->
+        <string>htxs</string>
+        <!-- 其他 URL Scheme 白名单-->
+        <string>http</string>
+        <string>https</string>
+    </array>
 </dict>
 </plist>
