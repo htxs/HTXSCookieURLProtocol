@@ -33,10 +33,13 @@ NSString * const USERDEFAULTSCOOKIE = @"USERDEFAULTSCOOKIE";
 }
 
 - (NSString *)cookieHeaderForHostName:(NSString *)hostName {
+    if (!hostName || hostName.length == 0) {
+        return nil;
+    }
     NSString *cookieHeader = nil;
     NSArray *cookies = [self getCookies];
     for (NSHTTPCookie *cookie in cookies) {
-        if ([cookie.domain rangeOfString:hostName].location != NSNotFound) {
+        if ([hostName rangeOfString:cookie.domain].location != NSNotFound) {
             NSTimeInterval expiresDate = [cookie.expiresDate timeIntervalSince1970];
             NSString *expires = [@(expiresDate * 1000) stringValue];
             if (!cookieHeader) {
