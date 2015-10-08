@@ -161,7 +161,8 @@ static NSString *HTXSCookieHeader = @"X-HTXSCookie";
     NSArray *cookies = [self cookies];
     
     for (NSHTTPCookie *cookie in cookies) {
-        if ([hostName rangeOfString:cookie.domain].location != NSNotFound) {
+        if ([cookie.domain rangeOfString:hostName].location != NSNotFound ||
+            [hostName rangeOfString:cookie.domain].location != NSNotFound) {
             NSTimeInterval expiresDate = [cookie.expiresDate timeIntervalSince1970];
             NSString *expires = [@(expiresDate * 1000) stringValue];
             if (!cookieHeader) {

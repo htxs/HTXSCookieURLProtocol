@@ -39,7 +39,8 @@ NSString * const USERDEFAULTSCOOKIE = @"USERDEFAULTSCOOKIE";
     NSString *cookieHeader = nil;
     NSArray *cookies = [self getCookies];
     for (NSHTTPCookie *cookie in cookies) {
-        if ([hostName rangeOfString:cookie.domain].location != NSNotFound) {
+        if ([cookie.domain rangeOfString:hostName].location != NSNotFound ||
+            [hostName rangeOfString:cookie.domain].location != NSNotFound) {
             NSTimeInterval expiresDate = [cookie.expiresDate timeIntervalSince1970];
             NSString *expires = [@(expiresDate * 1000) stringValue];
             if (!cookieHeader) {
